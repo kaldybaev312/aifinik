@@ -5,3 +5,4 @@ server/.env
 *.pdf
 Thumbs.db
 desktop.ini
+.vercel/

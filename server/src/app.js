@@ -24,7 +24,9 @@ const __dirname = path.dirname(__filename);
 // paths
 const publicDir = path.join(__dirname, "..", "..", "public");
 
-async function bootstrap() {
+let appPromise = null;
+
+async function initApp() {
   await connectMongo(ENV.MONGO_URI);
   await bootstrapAdmin({
     email: ENV.ADMIN_EMAIL,
@@ -44,7 +46,6 @@ async function bootstrap() {
   app.use("/api/auth", authRoutes);
   app.use("/api/admin", requireAuth, requireRole(["admin", "manager"]), adminRoutes);
   app.use("/api/public", publicRoutes);
-  app.use("/api/admin", adminRoutes);
   app.use("/api/public", registerRoutes);
   app.use("/api/public", ticketRoutes);
 
@@ -56,12 +57,33 @@ async function bootstrap() {
     res.sendFile(path.join(publicDir, "index.html"));
   });
 
+  return app;
+}
+
+export async function getApp() {
+  if (!appPromise) {
+    appPromise = initApp().catch((err) => {
+      appPromise = null;
+      throw err;
+    });
+  }
+  return appPromise;
+}
+
+async function bootstrap() {
+  const app = await getApp();
+
   app.listen(ENV.PORT, () => {
     console.log(`✅ Server: ${ENV.APP_URL} (port ${ENV.PORT})`);
   });
 }
 
-bootstrap().catch((err) => {
-  console.error("❌ Boot error:", err);
-  process.exit(1);
-});
+const isDirectRun =
+  process.argv[1] && path.resolve(process.argv[1]) === __filename;
+
+if (isDirectRun) {
+  bootstrap().catch((err) => {
+    console.error("❌ Boot error:", err);
+    process.exit(1);
+  });
+}
