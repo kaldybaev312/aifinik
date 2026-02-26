@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Aifinik Admin</title>
+  <link rel="stylesheet" href="../assets/admin.css"/>
+  <style>
+    .grid{display:grid;gap:10px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn2{background:rgba(255,255,255,.08);color:#eaf0ff;border:1px solid rgba(255,255,255,.14)}
+    .btn3{background:transparent;color:#a9c7ff;border:1px solid rgba(138,180,255,.25)}
+    .small{font-size:12px;opacity:.75}
+    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    a{color:#8ab4ff;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div>
+          <div class="small">Aifinik Admin</div>
+          <h1 style="margin:2px 0 0;">Панель</h1>
+        </div>
+        <button id="btnLogout" class="btn3" style="width:auto;padding:10px 12px;border-radius:12px;">Выход</button>
+      </div>
+
+      <div class="field">
+        <label>Сгенерировать коды (кол-во)</label>
+        <input id="count" type="number" value="1000" min="1" max="5000"/>
+      </div>
+
+      <div class="row">
+        <button id="btnGen">Generate</button>
+        <button id="btnCSV" class="btn2">Export CSV (ACTIVE)</button>
+      </div>
+
+      <div class="row">
+        <button id="btnPDF" class="btn2">Download PDF 40×40</button>
+        <a href="participants.html" class="btn3" style="display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:14px;">Участники</a>
+        <a href="../draw-show.html" class="btn3" style="display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:14px;">Шоу-розыгрыш ✨</a>
+      </div>
+
+      <div style="margin-top:14px" class="grid">
+        <div class="small">Розыгрыш</div>
+
+        <div class="field">
+          <label>Название розыгрыша</label>
+          <input id="drawName" value="Aifinik Promo — Розыгрыш"/>
+        </div>
+
+        <div class="field">
+          <label>Когда будет розыгрыш?</label>
+          <input id="drawAt" type="datetime-local"/>
+          <div class="small">Пример: выбери дату и время (как в календаре).</div>
+        </div>
+
+        <div class="field">
+          <label>Сколько призовых мест разыгрываем в одном розыгрыше?</label>
+          <input id="prizesCount" type="number" value="1" min="1" max="10"/>
+          <div class="small">Например 3 → покажем 3 победителя, и в конце главный приз (1 место).</div>
+        </div>
+
+        <div class="row">
+          <button id="btnCreateDraw" class="btn2">Создать розыгрыш</button>
+          <button id="btnOpenShow" class="btn2">Открыть Шоу</button>
+        </div>
+      </div>
+
+      <div id="out" class="alert hidden"></div>
+    </div>
+  </div>
+
+  <script src="../js/admin-dashboard.js"></script>
+</body>
+</html>

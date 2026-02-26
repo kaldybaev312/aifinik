@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Aifinik Admin Login</title>
+  <link rel="stylesheet" href="/assets/admin.css"/>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Aifinik Admin</h1>
+      <p class="sub">Вход для управления конкурсом</p>
+
+      <div class="field">
+        <label>Email</label>
+        <input id="email" type="email" placeholder="admin@aifinik.kg">
+      </div>
+      <div class="field">
+        <label>Пароль</label>
+        <input id="password" type="password" placeholder="••••••••">
+      </div>
+
+      <button id="btnLogin">Войти</button>
+      <div id="err" class="alert hidden"></div>
+    </div>
+  </div>
+
+  <script src="/js/admin-login.js"></script>
+</body>
+</html>

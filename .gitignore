@@ -1,0 +1,7 @@
+server/node_modules/
+server/.env
+*.log
+*.tmp
+*.pdf
+Thumbs.db
+desktop.ini

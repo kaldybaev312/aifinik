@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aifinik Promo</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="card">
+        <div class="brand">
+          <div class="logo">
+            Aifinik<svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 120 120"
+              width="150"
+              height="150"
+            >
+              <g transform="translate(10, 10) rotate(-45 50 50)">
+                <path
+                  d="M 50,10 A 40,40 0 0,0 50,90 A 42,42 0 0,1 50,10 Z"
+                  fill="#FFF"
+                />
+              </g>
+            </svg>
+          </div>
+          <div class="badge">PROMO</div>
+        </div>
+
+        <!-- STEP: FORM -->
+        <section id="stepForm">
+          <h1>Регистрация в акции</h1>
+          <p class="sub">Введите данные и код с вкладыша — получите билет.</p>
+
+          <form id="promoForm">
+            <div class="field">
+              <label>ФИО</label>
+              <input
+                id="fullName"
+                type="text"
+                placeholder="Введите ФИО"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label>Номер телефона</label>
+              <input
+                id="phone"
+                type="tel"
+                placeholder="+996 700 123 456"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label>Код с вкладыша</label>
+              <input id="code" type="text" placeholder="XXXX-XXXX" required />
+              <div class="hint">Пример: K8F4-2Q9M</div>
+            </div>
+
+            <button id="btnSubmit" type="submit">
+              <span class="btnText">Получить билет</span>
+              <span class="btnSpinner hidden"></span>
+            </button>
+            <div class="divider"></div>
+
+            <button id="btnRestoreOpen" class="btnGhost" type="button">
+              Уже регистрировался? Восстановить билет
+            </button>
+
+            <div id="restoreBox" class="restore hidden">
+              <div class="field">
+                <label>Номер телефона</label>
+                <input
+                  id="restorePhone"
+                  type="tel"
+                  placeholder="+996 700 123 456"
+                />
+              </div>
+              <button id="btnRestore" class="btnSecondary" type="button">
+                Найти мой билет
+              </button>
+              <div id="restoreError" class="alert alert-error hidden"></div>
+            </div>
+
+            <div id="formError" class="alert alert-error hidden"></div>
+          </form>
+        </section>
+
+        <!-- STEP: SUCCESS -->
+        <section id="stepSuccess" class="hidden">
+          <h1>Готово ✅</h1>
+          <p class="sub">
+            Ваш билет зарегистрирован и сохранен в системе.
+          </p>
+
+          <div class="countdown">
+            <div class="cdTitle">До розыгрыша осталось</div>
+            <div id="cdValue" class="cdValue">—</div>
+          </div>
+
+          <div class="ticket">
+            <div class="ticketTop">
+              <div>
+                <div class="ticketLabel">Номер билета</div>
+                <div id="ticketNumber" class="ticketNumber">#0000</div>
+              </div>
+              <div class="ticketMark">AIFINIK</div>
+            </div>
+
+            <div class="ticketGrid">
+              <div class="trow">
+                <div class="k">ФИО</div>
+                <div id="ticketName" class="v">—</div>
+              </div>
+              <div class="trow">
+                <div class="k">Телефон</div>
+                <div id="ticketPhone" class="v">—</div>
+              </div>
+              <div class="trow">
+                <div class="k">Код</div>
+                <div id="ticketCode" class="v mono">—</div>
+              </div>
+            </div>
+
+            <div class="ticketMsg">
+              <div id="msgRu" class="msgLine">—</div>
+              <div id="msgKg" class="msgLine">—</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="btnCopy" class="btnSecondary" type="button">
+              Скопировать билет
+            </button>
+            <button id="btnAgain" class="btnGhost" type="button">
+              Зарегистрировать другой код
+            </button>
+          </div>
+
+          <div id="copyToast" class="toast hidden">Скопировано ✅</div>
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/enter.js"></script>
+  </body>
+</html>

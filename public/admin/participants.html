@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Aifinik Participants</title>
+  <link rel="stylesheet" href="/assets/admin.css"/>
+  <style>
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,.10);font-size:12px;vertical-align:top}
+    th{opacity:.7;text-align:left}
+    .top{display:flex;justify-content:space-between;align-items:center}
+    .btn3{background:transparent;color:#a9c7ff;border:1px solid rgba(138,180,255,.25);padding:10px 12px;border-radius:12px;cursor:pointer}
+    .mono{font-family:ui-monospace,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" style="max-width:980px;">
+      <div class="top">
+        <div>
+          <div class="small">Aifinik Admin</div>
+          <h1 style="margin:2px 0 0;">Участники</h1>
+        </div>
+        <button class="btn3" onclick="location.href='/admin/dashboard.html'">Назад</button>
+      </div>
+
+      <button id="btnReload" class="btn2" style="margin-top:10px">Обновить</button>
+      <div id="out" class="alert hidden"></div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Время</th>
+            <th>Билет</th>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>Код</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/admin-participants.js"></script>
+</body>
+</html>
