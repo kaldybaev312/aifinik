@@ -64,11 +64,13 @@ router.get("/codes/export.csv", async (req, res) => {
 /* =========================
    PRINT: PDF CARDS (40x40)
 ========================= */
-// GET /api/admin/print/cards.pdf?status=ACTIVE&limit=1000
+// GET /api/admin/print/cards.pdf?status=ACTIVE&limit=200
 router.get("/print/cards.pdf", async (req, res) => {
   try {
   const status = String(req.query.status || "ACTIVE").toUpperCase();
-  const limit = Math.min(Number(req.query.limit || 1000), 5000);
+  const maxPdfCards = Math.min(Number(process.env.PRINT_PDF_MAX_CARDS || 300), 1000);
+  const requestedLimit = Number(req.query.limit || 200);
+  const limit = Math.max(1, Math.min(requestedLimit, maxPdfCards));
 
   const codes = await Code.find({ status }).sort({ createdAt: 1 }).limit(limit).lean();
   if (!codes.length) return res.status(404).json({ ok: false, message: "Нет кодов для печати." });
@@ -76,7 +78,7 @@ router.get("/print/cards.pdf", async (req, res) => {
   const pdfBuffer = await buildCardsPdf({ codes });
 
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `attachment; filename="aifinik_cards_${limit}.pdf"`);
+  res.setHeader("Content-Disposition", `attachment; filename="aifinik_cards_${codes.length}.pdf"`);
   res.send(pdfBuffer);
   } catch (err) {
     console.error("[admin/print] PDF generation failed:", err);

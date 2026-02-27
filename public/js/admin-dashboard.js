@@ -45,7 +45,7 @@ document.getElementById("btnCSV").addEventListener("click", () => {
 });
 
 document.getElementById("btnPDF").addEventListener("click", () => {
-  downloadWithAuth("/api/admin/print/cards.pdf?status=ACTIVE&limit=1000", "aifinik_cards_1000.pdf");
+  downloadWithAuth("/api/admin/print/cards.pdf?status=ACTIVE&limit=200", "aifinik_cards_200.pdf");
 });
 
 document.getElementById("btnOpenShow").addEventListener("click", () => {

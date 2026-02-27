@@ -206,14 +206,12 @@ async function drawCard(doc, x, y, token, hasFont) {
 
   // QR (делаем крупно и чётко)
   const qrValue = buildEntryUrl(token);
-  const qrDataUrl = await QRCode.toDataURL(qrValue, {
+  const qrBuffer = await QRCode.toBuffer(qrValue, {
+    type: "png",
     margin: 0,
     errorCorrectionLevel: "M",
-    width: 800,
+    width: 256,
   });
-
-  const qrBase64 = qrDataUrl.replace(/^data:image\/png;base64,/, "");
-  const qrBuffer = Buffer.from(qrBase64, "base64");
 
   const qrZoneY = qrBoxY + qrTopLabelH + qrInnerPad;
   const qrZoneH = qrBoxH - qrTopLabelH - qrBottomLabelH - qrInnerPad * 2;
