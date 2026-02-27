@@ -1,8 +1,8 @@
 import { Throttle } from "../models/Throttle.js";
 
 function getIp(req) {
-  // если будет proxy (Vercel/NGINX), потом добавим trust proxy
-  return (req.headers["x-forwarded-for"]?.split(",")[0] || req.ip || "").trim();
+  // Используем req.ip; при включенном trust proxy Express сам возьмёт X-Forwarded-For
+  return (req.ip || "").trim();
 }
 
 export function makeThrottleKeys(req, phoneE164) {
