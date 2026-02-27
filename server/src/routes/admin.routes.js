@@ -66,6 +66,7 @@ router.get("/codes/export.csv", async (req, res) => {
 ========================= */
 // GET /api/admin/print/cards.pdf?status=ACTIVE&limit=1000
 router.get("/print/cards.pdf", async (req, res) => {
+  try {
   const status = String(req.query.status || "ACTIVE").toUpperCase();
   const limit = Math.min(Number(req.query.limit || 1000), 5000);
 
@@ -77,6 +78,10 @@ router.get("/print/cards.pdf", async (req, res) => {
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", `attachment; filename="aifinik_cards_${limit}.pdf"`);
   res.send(pdfBuffer);
+  } catch (err) {
+    console.error("[admin/print] PDF generation failed:", err);
+    res.status(500).json({ ok: false, message: "Failed to generate PDF" });
+  }
 });
 
 /* =========================

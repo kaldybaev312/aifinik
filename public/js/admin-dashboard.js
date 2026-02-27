@@ -56,13 +56,19 @@ async function downloadWithAuth(url, filename){
   hide();
   try{
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    if(!res.ok) throw new Error("Download failed");
+    if(!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.message || "Download failed");
+    }
     const blob = await res.blob();
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
+    const blobUrl = URL.createObjectURL(blob);
+    a.href = blobUrl;
     a.download = filename;
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(a.href);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
     show(`✅ Скачано: ${filename}`);
   }catch(e){ show("❌ " + e.message); }
 }

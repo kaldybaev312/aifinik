@@ -65,7 +65,7 @@ function registerFont(doc) {
 }
 
 export async function buildCardsPdf({ codes }) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     logAssetStatusOnce();
 
     const doc = new PDFDocument({ size: "A4", margin: 0 });
@@ -73,28 +73,33 @@ export async function buildCardsPdf({ codes }) {
     const buffers = [];
     doc.on("data", buffers.push.bind(buffers));
     doc.on("end", () => resolve(Buffer.concat(buffers)));
+    doc.on("error", (err) => reject(err));
 
-    const hasFont = registerFont(doc);
+    try {
+      const hasFont = registerFont(doc);
 
-    const PAGE_W = doc.page.width;
-    const PAGE_H = doc.page.height;
+      const PAGE_W = doc.page.width;
+      const PAGE_H = doc.page.height;
 
-    const COLS = Math.floor(PAGE_W / CARD_W);
-    const ROWS = Math.floor(PAGE_H / CARD_H);
+      const COLS = Math.floor(PAGE_W / CARD_W);
+      const ROWS = Math.floor(PAGE_H / CARD_H);
 
-    for (let i = 0; i < codes.length; i++) {
-      if (i > 0 && i % (COLS * ROWS) === 0) doc.addPage();
+      for (let i = 0; i < codes.length; i++) {
+        if (i > 0 && i % (COLS * ROWS) === 0) doc.addPage();
 
-      const col = i % COLS;
-      const row = Math.floor(i / COLS) % ROWS;
+        const col = i % COLS;
+        const row = Math.floor(i / COLS) % ROWS;
 
-      const x = col * CARD_W;
-      const y = row * CARD_H;
+        const x = col * CARD_W;
+        const y = row * CARD_H;
 
-      await drawCard(doc, x, y, codes[i].token, hasFont);
+        await drawCard(doc, x, y, codes[i].token, hasFont);
+      }
+
+      doc.end();
+    } catch (err) {
+      reject(err);
     }
-
-    doc.end();
   });
 }
 
